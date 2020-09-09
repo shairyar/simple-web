@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@appsignal/nodejs": "^0.6.1",
+    "express": "*"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
