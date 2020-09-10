@@ -1,24 +1,21 @@
-const { Appsignal } = require("@appsignal/nodejs")
-const appsignal = new Appsignal({
-  active: true,
-  name: "Simple web",
-  apiKey: "KEY"
-})
-
+const { appsignal } = require("./appsignal")
 
 const express = require("express");
-
+const { expressMiddleware, expressErrorHandler } = require("@appsignal/express")
 const app = express();
+app.use(expressMiddleware(appsignal));
+
 
 app.get("/", (req, res) => {
-  // throw new Error('Whoops!')
-  res.send("How are you doing?");
+  throw new Error('Whoops! 3')
+  // res.send("How are you doing?");
 });
 
 app.get("/demo", (req, res) => {
-  res.send("Demo");
-  
+  res.send("Demo");  
 });
+
+app.use(expressErrorHandler(appsignal))
 
 app.listen(8080, () => {
   console.log("Listening on port 8080");
