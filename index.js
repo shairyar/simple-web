@@ -11,30 +11,56 @@ app.use(expressMiddleware(appsignal));
 app.use('/admin', adminRoutes);
 app.use('/user', userRoutes);
 
+//connecting to do
+const { Client } = require('pg');
+
+const client = new Client({
+    user: 'shairyar',
+    host: 'localhost',
+    database: 'simpleweb',
+    password: '',
+    port: 5432,
+});
+
+client.connect();
+
+const query = `
+CREATE TABLE users (
+    email varchar,
+    firstName varchar,
+    lastName varchar,
+    age int
+);
+`;
+
+client
+    .query(query)
+    .then(res => {
+        console.log('Table is successfully created');
+    })
+    .catch(err => {
+        console.error(err);
+    })
+    .finally(() => {
+        // client.end();
+    });
 
 app.get("/", (req, res) => {
-  // let user_id = 6;
-  // let locale = 'en'
-  // let default_locale = 'en'
 
+  const query = `
+  INSERT INTO users (email, firstName, lastName, age)
+  VALUES ('johndoe@gmail.com', 'john', 'doe', 21)
+  `;
+  
+  client.query(query, (err, res) => {
+    if (err) {
+        console.error(err);
+        return;
+    }
+    console.log('Data insert successful');
+    client.end();
+});
 
-  // const tracer = appsignal.tracer();
-
-  // const span = tracer.currentSpan();
-  // const childSpan = span.child();
-
-  // childSpan.setName("GET /homepage");
-  // span.setSampleData("params", { string: "value", number: 123 });
-  // span.setSampleData("custom_data", { foo: "bar" });
-  // childSpan.close()
-  // throw new Error('Whoops! error on home page')
-  // const tracer = appsignal.tracer();
-  // const span = tracer.currentSpan();
-  // span.set("user", user_id);
-  // span.set("admin_url", '<a href="url">Admin</a>');
-  // span.set("stripe_customer", '<a href="url">Stripe</a>');
-  // span.set("locale", locale);
-  // span.set("default_locale", default_locale);
   console.log(req)
   res.send("How are you doing?");
 });

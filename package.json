@@ -2,8 +2,8 @@
   "dependencies": {
     "@appsignal/express": "1.0.7",
     "@appsignal/nodejs": "^1.2.0",
-    "@appsignal/pg": "^0.8.2",
-    "express": "*"
+    "express": "*",
+    "pg": "^8.5.1"
   },
   "scripts": {
     "start": "node index.js"
