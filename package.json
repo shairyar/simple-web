@@ -1,7 +1,8 @@
 {
   "dependencies": {
-    "@appsignal/express": "^0.6.1",
-    "@appsignal/nodejs": "^0.6.1",
+    "@appsignal/express": "1.0.7",
+    "@appsignal/nodejs": "^1.2.0",
+    "@appsignal/pg": "^0.8.2",
     "express": "*"
   },
   "scripts": {

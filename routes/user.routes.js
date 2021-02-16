@@ -3,15 +3,15 @@ const express = require('express')
 const router = express.Router()
 
 router.get('/', function(req, res){
-  res.send('dashboard for admin')
+  res.send('dashboard for user')
 });
 
-router.get('/users', function(req, res){
-  res.send('listing all users here for admin')
+router.get('/profile', function(req, res){
+  res.send('profile page of a user')
 });
 
 router.get('/settings', function(req, res){
-  res.send('listing system settings')
+  res.send('settings page for a user')
 });
 
 module.exports = router;
