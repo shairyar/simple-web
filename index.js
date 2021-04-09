@@ -11,55 +11,55 @@ app.use(expressMiddleware(appsignal));
 app.use('/admin', adminRoutes);
 app.use('/user', userRoutes);
 
-//connecting to do
-const { Client } = require('pg');
+// //connecting to do
+// const { Client } = require('pg');
 
-const client = new Client({
-    user: 'shairyar',
-    host: 'localhost',
-    database: 'simpleweb',
-    password: '',
-    port: 5432,
-});
+// const client = new Client({
+//     user: 'shairyar',
+//     host: 'localhost',
+//     database: 'simpleweb',
+//     password: '',
+//     port: 5432,
+// });
 
-client.connect();
+// client.connect();
 
-const query = `
-CREATE TABLE users (
-    email varchar,
-    firstName varchar,
-    lastName varchar,
-    age int
-);
-`;
+// const query = `
+// CREATE TABLE users (
+//     email varchar,
+//     firstName varchar,
+//     lastName varchar,
+//     age int
+// );
+// `;
 
-client
-    .query(query)
-    .then(res => {
-        console.log('Table is successfully created');
-    })
-    .catch(err => {
-        console.error(err);
-    })
-    .finally(() => {
-        // client.end();
-    });
+// client
+//     .query(query)
+//     .then(res => {
+//         console.log('Table is successfully created');
+//     })
+//     .catch(err => {
+//         console.error(err);
+//     })
+//     .finally(() => {
+//         // client.end();
+//     });
 
 app.get("/", (req, res) => {
 
-  const query = `
-  INSERT INTO users (email, firstName, lastName, age)
-  VALUES ('johndoe@gmail.com', 'john', 'doe', 21)
-  `;
+//   const query = `
+//   INSERT INTO users (email, firstName, lastName, age)
+//   VALUES ('johndoe@gmail.com', 'john', 'doe', 21)
+//   `;
   
-  client.query(query, (err, res) => {
-    if (err) {
-        console.error(err);
-        return;
-    }
-    console.log('Data insert successful');
-    client.end();
-});
+//   client.query(query, (err, res) => {
+//     if (err) {
+//         console.error(err);
+//         return;
+//     }
+//     console.log('Data insert successful');
+//     client.end();
+// });
 
   console.log(req)
   res.send("How are you doing?");
