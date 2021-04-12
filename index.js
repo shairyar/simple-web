@@ -1,99 +1,44 @@
-const { appsignal } = require("./appsignal")
-const { expressMiddleware, expressErrorHandler } = require("@appsignal/express")
+const  {app, appsignal}  = require("./express")
+// const https = require('https')
+const { expressErrorHandler } = require("@appsignal/express")
 
-const express = require("express")
-const app = express();
 const adminRoutes = require("./routes/admin.routes");
-const userRoutes = require("./routes/user.routes");
-const https = require('https')
-// ADD THIS AFTER ANY OTHER EXPRESS MIDDLEWARE, BUT BEFORE ANY ROUTES!
-app.use(expressMiddleware(appsignal));
 app.use('/admin', adminRoutes);
-app.use('/user', userRoutes);
-
-// //connecting to do
-// const { Client } = require('pg');
-
-// const client = new Client({
-//     user: 'shairyar',
-//     host: 'localhost',
-//     database: 'simpleweb',
-//     password: '',
-//     port: 5432,
-// });
-
-// client.connect();
-
-// const query = `
-// CREATE TABLE users (
-//     email varchar,
-//     firstName varchar,
-//     lastName varchar,
-//     age int
-// );
-// `;
-
-// client
-//     .query(query)
-//     .then(res => {
-//         console.log('Table is successfully created');
-//     })
-//     .catch(err => {
-//         console.error(err);
-//     })
-//     .finally(() => {
-//         // client.end();
-//     });
 
 app.get("/", (req, res) => {
-
-//   const query = `
-//   INSERT INTO users (email, firstName, lastName, age)
-//   VALUES ('johndoe@gmail.com', 'john', 'doe', 21)
-//   `;
-  
-//   client.query(query, (err, res) => {
-//     if (err) {
-//         console.error(err);
-//         return;
-//     }
-//     console.log('Data insert successful');
-//     client.end();
-// });
-
   console.log(req)
   res.send("How are you doing?");
 });
 
 app.get("/demo", (req, res) => {
 
-  const tracer = appsignal.tracer();
-  const span = tracer.currentSpan("{setName: 'Get request to route todo'}");
+  // const tracer = appsignal.tracer();
+  // const span = tracer.currentSpan("{setName: 'Get request to route todo'}");
   
-  // span.setName("Get request to route todo");
-  console.log('sending a request to localhost')
+  // // span.setName("Get request to route todo");
+  // console.log('sending a request to localhost')
 
-  const options = {
-    hostname: 'google',
-    port: 3000,
-    path: '/todos',
-    method: 'GET'
-  }
+  // const options = {
+  //   hostname: 'google',
+  //   port: 3000,
+  //   path: '/todos',
+  //   method: 'GET'
+  // }
   
-  const request = https.request(options, response => {
-    console.log(`statusCode: ${response.statusCode}`)
+  // const request = https.request(options, response => {
+  //   console.log(`statusCode: ${response.statusCode}`)
   
-    response.on('data', d => {
-      process.stdout.write(d)
-    })
+  //   response.on('data', d => {
+  //     process.stdout.write(d)
+  //   })
 
-    response.on('error', error => {
-      console.error(error)
-    })
-  });
+  //   response.on('error', error => {
+  //     console.error(error)
+  //   })
+  // });
   
-  request.end()
-  span.close()
+  // request.end()
+  // span.close()
 
   res.send("Demo");
 });

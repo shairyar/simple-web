@@ -1,17 +1,19 @@
-//Routes For admin
-const express = require('express')
-const router = express.Router()
+const user = require('express').Router();
 
-router.get('/', function(req, res){
+//Routes For users
+user.get('/', function(req, res){
   res.send('dashboard for user')
 });
 
-router.get('/profile', function(req, res){
+user.get('/profile', function(req, res){
   res.send('profile page of a user')
 });
 
-router.get('/settings', function(req, res){
+user.get('/settings', function(req, res){
   res.send('settings page for a user')
 });
 
-module.exports = router;
+user.get('/settings2', function(req, res){
+  res.send('settings2 page for a user')
+});
+module.exports = user;
