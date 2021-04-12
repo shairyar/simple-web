@@ -12,10 +12,6 @@ admin.get('/users', function(req, res){
   res.send('listing all users here for admin')
 });
 
-admin.get('/users2', function(req, res){
-  res.send('listing all users here for admin')
-});
-
 admin.get('/users/:id', function(req, res){
   res.send('listing a specific user here for admin')
 });

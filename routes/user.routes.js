@@ -13,7 +13,7 @@ user.get('/settings', function(req, res){
   res.send('settings page for a user')
 });
 
-user.get('/settings2', function(req, res){
-  res.send('settings2 page for a user')
+user.get('/:id', function(req, res){
+  res.send('route with just id')
 });
 module.exports = user;
