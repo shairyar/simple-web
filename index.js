@@ -1,6 +1,52 @@
 const  {app, appsignal}  = require("./express")
-// const https = require('https')
+
+const { createApolloPlugin } = require("@appsignal/apollo-server");
+const { ApolloServer, gql } = require("apollo-server");
+
 const { expressErrorHandler } = require("@appsignal/express")
+
+// The GraphQL schema
+const typeDefs = gql`
+
+  # This "Book" type defines the queryable fields for every book in our data source.
+  type Book {
+    title: String
+    author: String
+  }
+
+  type Query {
+    books: [Book]
+    authors: [Author]
+  }
+`;
+
+const books = [
+  {
+    title: 'The Awakening',
+    author: 'Kate Chopin',
+  },
+  {
+    title: 'City of Glass',
+    author: 'Paul Auster',
+  },
+];
+
+// A map of functions which return data for the schema.
+const resolvers = {
+  Query: {
+    books: () => books,
+  },
+};
+
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  plugins: [createApolloPlugin(appsignal)],
+});
+
+server.listen().then(({ url }) => {
+  console.log(`🚀 Server ready at ${url}`);
+});
 
 const adminRoutes = require("./routes/admin.routes");
 app.use('/admin', adminRoutes);
