@@ -4,7 +4,7 @@ const { createApolloPlugin } = require("@appsignal/apollo-server");
 const { ApolloServer, gql } = require("apollo-server");
 
 const { expressErrorHandler } = require("@appsignal/express")
-
+const fs = require('fs');
 // The GraphQL schema
 const typeDefs = gql`
 
@@ -14,9 +14,17 @@ const typeDefs = gql`
     author: String
   }
 
+  type Author {
+    author: String
+  }
+
   type Query {
     books: [Book]
     authors: [Author]
+  }
+
+  type Query2 {
+    readError: String
   }
 `;
 
@@ -35,6 +43,11 @@ const books = [
 const resolvers = {
   Query: {
     books: () => books,
+  },
+  Query2: {
+    readError: (parent, args, context) => {
+      fs.readFileSync('/does/not/exist');
+    },
   },
 };
 
