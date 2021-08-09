@@ -4,9 +4,7 @@ exports.appsignal = new Appsignal({
   active: true,
   name: "Simple web",
   apiKey: process.env.APPSIGNAL_PUSH_API_KEY,
-  ignoreActions: ["ignored", "ignore"],
-  ignoreErrors: ["FancyError", "AnotherFancyError"],
-  environment: "development",
+  environment: process.env.NODE_ENV,
   revision: "xyz",
   debug: true,
   logPath: "logs"
