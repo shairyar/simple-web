@@ -6,6 +6,6 @@ exports.appsignal = new Appsignal({
   apiKey: process.env.APPSIGNAL_PUSH_API_KEY,
   environment: process.env.NODE_ENV,
   revision: "xyz",
-  debug: true,
+  log_level: "debug",
   logPath: "logs"
 })
