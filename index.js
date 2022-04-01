@@ -6,20 +6,30 @@ const adminRoutes = require("./routes/admin.routes");
 app.use("/admin", adminRoutes);
 
 app.get("/", (req, res) => {
-  // console.log(process.env);
-  res.send("How are you doing?");
+  res.send("Hello");
+});
+
+app.get("/error", (req, res) => {
+  const tracer = appsignal.tracer();
+  try {
+    throw new Error("Oh no!");
+  } catch (e) {
+    tracer.setError(e);
+  }
+  res.send("Hello");
 });
 
 app.get("/demo", (req, res) => {
-  // Span for the query
+
+  // appsignal custom instrumentation
   const tracer = appsignal.tracer();
   const rootSpan = tracer.rootSpan();
   const childSpan = rootSpan.child();
+  const user_name = 'Shairyar';
   childSpan.setName(`Query.sql.model.action`);
-  childSpan.setCategory("get.query");
+  childSpan.setCategory("get.query2");
+  childSpan.setSQL("select * from users where name = ?", user_name);
   childSpan.close();
-
-
   res.send("Demo");
 });
 
