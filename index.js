@@ -1,16 +1,32 @@
 const { app, appsignal } = require("./express");
 // const https = require('https')
 const { expressErrorHandler } = require("@appsignal/express");
+const bodyParser = require("body-parser");
 
 const adminRoutes = require("./routes/admin.routes");
 const userRoutes = require("./routes/user.routes");
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
 app.get("/", (req, res) => {
   res.send("Hello");
 });
 
-app.get("/error", (req, res) => {
+app.post("/login",(req, res) => {
+  const tracer = appsignal.tracer();
+  const span = tracer.currentSpan();
+  console.log("path", req.url);
+  // Use AppSignal tags to add more context to the sample: https://docs.appsignal.com/guides/custom-data/tagging-request.html#node-js
+  span.set("path", req.url);
+
+  // Use AppSignal sample data to add metadata to the sample: https://docs.appsignal.com/guides/custom-data/sample-data.html
+  span.setSampleData("custom_data", req.body);
+  res.end("Logged in");
+  });
+
+  app.get("/error", (req, res) => {
   const tracer = appsignal.tracer();
   try {
     throw new Error("Oh no!");
