@@ -15,10 +15,14 @@ app.get("/", (req, res) => {
 });
 
 app.post("/login",(req, res) => {
-  console.log(req.body);
-  var user_name = req.body.user;
-  var password = req.body.password;
-  console.log("User name = "+user_name+", password is "+password);
+  const tracer = appsignal.tracer();
+  const span = tracer.currentSpan();
+  console.log("path", req.url);
+  // Use AppSignal tags to add more context to the sample: https://docs.appsignal.com/guides/custom-data/tagging-request.html#node-js
+  span.set("path", req.url);
+
+  // Use AppSignal sample data to add metadata to the sample: https://docs.appsignal.com/guides/custom-data/sample-data.html
+  span.setSampleData("custom_data", req.body);
   res.end("Logged in");
   });
 
