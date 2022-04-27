@@ -1,16 +1,28 @@
 const { app, appsignal } = require("./express");
 // const https = require('https')
 const { expressErrorHandler } = require("@appsignal/express");
+const bodyParser = require("body-parser");
 
 const adminRoutes = require("./routes/admin.routes");
 const userRoutes = require("./routes/user.routes");
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
 app.get("/", (req, res) => {
   res.send("Hello");
 });
 
-app.get("/error", (req, res) => {
+app.post("/login",(req, res) => {
+  console.log(req.body);
+  var user_name = req.body.user;
+  var password = req.body.password;
+  console.log("User name = "+user_name+", password is "+password);
+  res.end("Logged in");
+  });
+
+  app.get("/error", (req, res) => {
   const tracer = appsignal.tracer();
   try {
     throw new Error("Oh no!");
