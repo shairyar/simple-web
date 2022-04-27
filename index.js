@@ -3,8 +3,9 @@ const { app, appsignal } = require("./express");
 const { expressErrorHandler } = require("@appsignal/express");
 
 const adminRoutes = require("./routes/admin.routes");
+const userRoutes = require("./routes/user.routes");
 app.use("/admin", adminRoutes);
-
+app.use("/user", userRoutes);
 app.get("/", (req, res) => {
   res.send("Hello");
 });
