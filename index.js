@@ -11,7 +11,17 @@ app.use(bodyParser.json());
 app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
 app.get("/", (req, res) => {
-  res.send("Hello");
+  if (!req.body.name) {
+    res.status(400).json({
+      status: 'error',
+      error: 'req body cannot be empty',
+    });
+  }
+
+  res.status(200).json({
+    status: 'succes',
+    data: req.body,
+  })
 });
 
 app.post("/login",(req, res) => {
